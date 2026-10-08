@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+
+/* Tipografías autoalojadas (@fontsource), solo los pesos/estilos usados. */
+@import '@fontsource/fraunces/400-italic.css';
+@import '@fontsource/fraunces/500-italic.css';
+@import '@fontsource/fraunces/600-italic.css';
+@import '@fontsource/space-grotesk/400.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/700.css';
+
+@theme {
+  /* Paleta de marca */
+  --color-background: #0a0a0a;
+  --color-foreground: #f2efe9;
+  --color-muted: #8c887e;
+  --color-border: #2a2a28;
+  --color-accent: #c9a15a;
+  --color-accent-light: #e8c77e;
+
+  /* Tipografías */
+  --font-display: 'Fraunces', serif;
+  --font-sans: 'Space Grotesk', sans-serif;
+}
