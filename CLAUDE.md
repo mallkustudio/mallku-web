@@ -22,6 +22,8 @@ Nada que cambie por cliente puede estar hardcodeado en componentes/layouts.
 - Datos de marca/contacto/redes → `src/config/site.ts`.
 - Tokens visuales (color, tipografía) → `@theme` en `src/styles/global.css`.
 - Contenido → Content Collections (`src/content/`), no en componentes.
+- `PUBLIC_ALLOW_INDEXING` (env) → controla `noindex` y `robots.txt`; sin dominio
+  propio debe quedar ausente/distinto de `"true"` para no indexar el *.pages.dev.
 
 ## Bloques de trabajo
 

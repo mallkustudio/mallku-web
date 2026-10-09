@@ -22,6 +22,13 @@ export const siteConfig = {
    */
   url: (import.meta.env.PUBLIC_SITE_URL ?? 'https://www.mallkustudio.com').replace(/\/+$/, ''),
 
+  /**
+   * Si el sitio puede ser indexado por buscadores. Por defecto NO (todavía
+   * se publica en una URL *.pages.dev sin dominio propio). Solo el valor
+   * exacto "true" en PUBLIC_ALLOW_INDEXING habilita la indexación.
+   */
+  allowIndexing: import.meta.env.PUBLIC_ALLOW_INDEXING === 'true',
+
   /** Idioma principal del sitio (atributo lang del documento). */
   lang: 'es',
 

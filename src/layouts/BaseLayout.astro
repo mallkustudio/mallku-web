@@ -30,6 +30,7 @@ const ogImageURL = image ? new URL(image, siteConfig.url).toString() : undefined
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    {!siteConfig.allowIndexing && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
