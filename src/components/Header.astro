@@ -1,0 +1,35 @@
+---
+import Logo from './Logo.astro';
+import Container from './ui/Container.astro';
+import { siteConfig } from '../config/site';
+
+interface Props {
+  /** id del <dialog> del menú que abre el botón. */
+  menuId?: string;
+}
+
+const { menuId = 'menu-overlay' } = Astro.props;
+---
+
+<a
+  href="#contenido"
+  class="fixed top-4 left-4 z-(--z-skip-link) -translate-y-[200%] rounded-full bg-foreground px-5 py-3 text-small font-medium text-background no-underline focus-visible:translate-y-0"
+>
+  Saltar al contenido
+</a>
+<header class="border-b border-border">
+  <Container class="flex min-h-20 items-center justify-between gap-6">
+    <a href="/" class="no-underline" aria-label={`${siteConfig.name} — inicio`}>
+      <Logo />
+    </a>
+    <button
+      type="button"
+      class="inline-flex min-h-11 cursor-pointer items-center rounded-full border border-border px-5 text-small font-medium transition-colors duration-(--duration-fast) ease-standard hover:border-accent hover:text-accent-light"
+      aria-haspopup="dialog"
+      aria-controls={menuId}
+      data-menu-open
+    >
+      Menú
+    </button>
+  </Container>
+</header>
