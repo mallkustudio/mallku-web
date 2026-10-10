@@ -1,14 +1,15 @@
 ---
+import Container from '../components/ui/Container.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { siteConfig } from '../config/site';
 ---
 
 <BaseLayout title="Contacto" description="Contactá a Mallku Studio. [CONTENIDO PENDIENTE]">
-  <main>
+  <Container class="py-section-sm">
     <h1>Contacto</h1>
     <p>[CONTENIDO PENDIENTE]</p>
     <p>
       <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
     </p>
-  </main>
+  </Container>
 </BaseLayout>

@@ -1,4 +1,7 @@
 ---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import MenuOverlay from '../components/MenuOverlay.astro';
 import { siteConfig } from '../config/site';
 import '../styles/global.css';
 
@@ -46,7 +49,12 @@ const ogImageURL = image ? new URL(image, siteConfig.url).toString() : undefined
     <meta name="twitter:description" content={description} />
     {ogImageURL && <meta name="twitter:image" content={ogImageURL} />}
   </head>
-  <body>
-    <slot />
+  <body class="flex min-h-screen flex-col">
+    <Header menuId="menu-overlay" />
+    <main id="contenido" tabindex="-1" class="flex-1 focus:outline-none">
+      <slot />
+    </main>
+    <Footer />
+    <MenuOverlay id="menu-overlay" />
   </body>
 </html>

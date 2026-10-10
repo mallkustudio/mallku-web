@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
+import Container from '../../components/ui/Container.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
@@ -16,9 +17,9 @@ const { Content } = await render(servicio);
 ---
 
 <BaseLayout title={servicio.data.seoTitle} description={servicio.data.seoDescription}>
-  <main>
+  <Container class="py-section-sm">
     <h1>{servicio.data.title}</h1>
     <p>{servicio.data.summary}</p>
     <Content />
-  </main>
+  </Container>
 </BaseLayout>
