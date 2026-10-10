@@ -12,9 +12,9 @@ para clientes.
   `src/styles/global.css` (sin `tailwind.config.js`).
 - `@astrojs/react`, `@astrojs/mdx`, `@astrojs/sitemap`.
 - Content Collections con validación Zod (`src/content.config.ts`).
-- Tipografías autoalojadas con `@fontsource` (Fraunces itálica para
-  titulares, Space Grotesk para UI/cuerpo).
-- Hosting futuro: Cloudflare Pages (sin adapter SSR). Gestor: npm.
+- Tipografías `@fontsource`: Fraunces itálica (titulares), Space Grotesk (UI/cuerpo).
+- Hosting: Cloudflare Workers (static assets), deploy automático al hacer push a main.
+  Sin adapter SSR. Gestor: npm.
 
 ## Regla clave: config vs. estructura
 
@@ -35,15 +35,15 @@ Nada que cambie por cliente puede estar hardcodeado en componentes/layouts.
 
 ## Contrato del overlay de menú
 
-`MenuOverlay` usa `<dialog>` nativo. Abrir/cerrar sin acoplarse:
-`window.dispatchEvent(new CustomEvent('mallku:menu-open'))` /
-`'mallku:menu-close'`, o botones con `data-menu-open` / `data-menu-close`.
+`MenuOverlay` usa `<dialog>` nativo. Abrir/cerrar sin acoplarse con los CustomEvent
+`mallku:menu-open` / `mallku:menu-close` en `window`, o con `data-menu-open` / `data-menu-close`.
 
 ## Bloques de trabajo
 
-Estamos en el **Bloque 2 (diseño base + shell)**. No instalar ni usar
-animaciones, WebGL, GSAP, Lenis, Three.js/R3F ni View Transitions hasta que
-un bloque posterior lo pida explícitamente. Solo transiciones CSS de hover/focus.
+**Bloque 2 completo** (shell: tokens, primitivos, Header, MenuOverlay, Footer).
+Próximo: **Bloque 3 (hero 3D)**. No instalar animaciones, WebGL, GSAP, Lenis,
+Three.js/R3F ni View Transitions hasta que un bloque lo pida explícitamente.
+Por ahora, solo transiciones CSS de hover/focus.
 
 ## Convenciones de commits
 
