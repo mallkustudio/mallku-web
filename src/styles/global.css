@@ -20,6 +20,55 @@
   /* Tipografías */
   --font-display: 'Fraunces', serif;
   --font-sans: 'Space Grotesk', sans-serif;
+
+  /* Escala tipográfica fluida (utilidades text-display, text-h1, …) */
+  --text-display: clamp(3rem, 1.6rem + 6vw, 7.5rem);
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.02em;
+  --text-h1: clamp(2.5rem, 1.75rem + 3.5vw, 5rem);
+  --text-h1--line-height: 1.05;
+  --text-h1--letter-spacing: -0.015em;
+  --text-h2: clamp(2rem, 1.5rem + 2.25vw, 3.5rem);
+  --text-h2--line-height: 1.1;
+  --text-h3: clamp(1.5rem, 1.25rem + 1vw, 2.25rem);
+  --text-h3--line-height: 1.2;
+  --text-body: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-body--line-height: 1.6;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.4;
+  --text-eyebrow--letter-spacing: 0.18em;
+
+  /* Espaciado (utilidades p-gutter, py-section-md, gap-stack, …) */
+  --spacing-gutter: clamp(1.25rem, 0.75rem + 2.5vw, 3rem);
+  --spacing-stack: clamp(1rem, 0.8rem + 1vw, 1.5rem);
+  --spacing-section-sm: clamp(3rem, 2rem + 4vw, 5rem);
+  --spacing-section-md: clamp(4.5rem, 3rem + 6vw, 8rem);
+  --spacing-section-lg: clamp(6rem, 4rem + 9vw, 12rem);
+
+  /* Ancho máximo del contenedor (utilidad max-w-content) */
+  --container-content: 90rem;
+
+  /* Easings de motion (uso futuro; utilidades ease-standard, …) */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* Tokens sin namespace de Tailwind: se consumen como var(--…) o z-(--z-…). */
+:root {
+  /* Capas */
+  --z-base: 0;
+  --z-header: 10;
+  --z-overlay: 100;
+  --z-skip-link: 1000;
+
+  /* Duraciones de motion (uso futuro) */
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 500ms;
+  --duration-slower: 900ms;
 }
 
 /* Reset sensato */
@@ -50,7 +99,8 @@ body {
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);
-  line-height: 1.5;
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
 }
 
 h1,
@@ -64,6 +114,12 @@ h4 {
 
 a {
   color: inherit;
+}
+
+/* Foco visible en dorado para navegación por teclado. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
