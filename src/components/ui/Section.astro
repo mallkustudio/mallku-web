@@ -1,0 +1,23 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Spacing = 'none' | 'sm' | 'md' | 'lg';
+
+interface Props extends HTMLAttributes<'section'> {
+  /** Espaciado vertical (tokens --spacing-section-*). */
+  spacing?: Spacing;
+}
+
+const { spacing = 'md', class: className, ...rest } = Astro.props;
+
+const spacingClass: Record<Spacing, string> = {
+  none: '',
+  sm: 'py-section-sm',
+  md: 'py-section-md',
+  lg: 'py-section-lg',
+};
+---
+
+<section class:list={[spacingClass[spacing], className]} {...rest}>
+  <slot />
+</section>

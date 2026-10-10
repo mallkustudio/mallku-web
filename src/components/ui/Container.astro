@@ -1,0 +1,14 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'div'> {
+  /** Elemento HTML a renderizar. */
+  as?: 'div' | 'header' | 'footer' | 'nav';
+}
+
+const { as: Tag = 'div', class: className, ...rest } = Astro.props;
+---
+
+<Tag class:list={['mx-auto w-full max-w-content px-gutter', className]} {...rest}>
+  <slot />
+</Tag>
