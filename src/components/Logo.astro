@@ -1,0 +1,21 @@
+---
+/**
+ * TODO(marca): reemplazar el placeholder (rombo geométrico en
+ * src/assets/logo-mark.svg + wordmark en texto) por el logo real del cliente.
+ */
+import LogoMark from '../assets/logo-mark.svg';
+import { siteConfig } from '../config/site';
+
+interface Props {
+  class?: string;
+  /** Muestra solo el wordmark, sin el rombo. */
+  wordmarkOnly?: boolean;
+}
+
+const { class: className, wordmarkOnly = false } = Astro.props;
+---
+
+<span class:list={['inline-flex items-center gap-3', className]}>
+  {!wordmarkOnly && <LogoMark class="size-6 shrink-0 text-accent" aria-hidden="true" />}
+  <span class="text-small font-medium tracking-[0.28em] whitespace-nowrap uppercase">{siteConfig.name}</span>
+</span>
