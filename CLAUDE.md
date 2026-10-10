@@ -25,11 +25,25 @@ Nada que cambie por cliente puede estar hardcodeado en componentes/layouts.
 - `PUBLIC_ALLOW_INDEXING` (env) → controla `noindex` y `robots.txt`; sin dominio
   propio debe quedar ausente/distinto de `"true"` para no indexar el *.pages.dev.
 
+## Sistema de diseño
+
+- Tokens en `@theme`: `text-{display,h1,h2,h3,body,small,eyebrow}` (clamp),
+  `*-gutter`, `*-stack`, `*-section-{sm,md,lg}`, `max-w-content`,
+  `ease-{standard,emphasized,exit}`. En `:root`: `--z-*` y `--duration-*`.
+- Primitivos sin JS en `src/components/ui/` (Container, Section, Eyebrow,
+  LinkButton). Shell: Header, MenuOverlay, Footer en `BaseLayout`.
+
+## Contrato del overlay de menú
+
+`MenuOverlay` usa `<dialog>` nativo. Abrir/cerrar sin acoplarse:
+`window.dispatchEvent(new CustomEvent('mallku:menu-open'))` /
+`'mallku:menu-close'`, o botones con `data-menu-open` / `data-menu-close`.
+
 ## Bloques de trabajo
 
-Estamos en el **Bloque 1 (cimientos)**. No instalar ni usar animaciones,
-WebGL, GSAP, Lenis ni Three.js hasta que un bloque posterior lo pida
-explícitamente.
+Estamos en el **Bloque 2 (diseño base + shell)**. No instalar ni usar
+animaciones, WebGL, GSAP, Lenis, Three.js/R3F ni View Transitions hasta que
+un bloque posterior lo pida explícitamente. Solo transiciones CSS de hover/focus.
 
 ## Convenciones de commits
 
@@ -43,3 +57,4 @@ Conventional Commits, mensajes en español, un commit por tarea lógica
 - `npm run preview` — sirve el build de `dist/`.
 - `npm run check` — `astro check` (TypeScript + diagnósticos Astro).
 - `npm run format` — formatea con Prettier (incluye `.astro`).
+- `npm run test:e2e` — Playwright (chromium) contra build + preview.
