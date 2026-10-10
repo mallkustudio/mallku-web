@@ -1,0 +1,125 @@
+---
+/**
+ * Overlay de navegación sobre <dialog> nativo (focus trap, ESC e inert del
+ * fondo sin librerías).
+ *
+ * Contrato: se abre/cierra con los CustomEvent "mallku:menu-open" y
+ * "mallku:menu-close" despachados en window, o con botones que tengan
+ * data-menu-open / data-menu-close.
+ */
+import { getCollection } from 'astro:content';
+import Logo from './Logo.astro';
+import Container from './ui/Container.astro';
+import { siteConfig } from '../config/site';
+
+interface Props {
+  id?: string;
+}
+
+const { id = 'menu-overlay' } = Astro.props;
+
+const servicios = (await getCollection('servicios')).sort((a, b) => a.data.order - b.data.order);
+
+const items = [
+  ...servicios.map((s) => ({ label: s.data.title, href: `/servicios/${s.data.slug}`, highlight: false })),
+  { label: 'Contacto', href: '/contacto', highlight: true },
+];
+---
+
+<dialog
+  id={id}
+  data-menu-overlay
+  aria-label="Menú"
+  class="m-0 h-dvh max-h-none w-full max-w-none overflow-y-auto bg-background text-foreground backdrop:bg-background"
+>
+  <div class="flex min-h-full flex-col">
+    <Container class="flex min-h-20 items-center justify-between gap-6 border-b border-border">
+      <Logo wordmarkOnly />
+      <button
+        type="button"
+        class="inline-flex min-h-11 cursor-pointer items-center rounded-full border border-border px-5 text-small font-medium transition-colors duration-(--duration-fast) ease-standard hover:border-accent hover:text-accent-light"
+        data-menu-close
+        autofocus
+      >
+        Cerrar
+      </button>
+    </Container>
+
+    <Container as="nav" aria-label="Principal" class="flex flex-1 flex-col justify-center py-section-sm">
+      <ol>
+        {
+          items.map((item, i) => (
+            <li>
+              <a
+                href={item.href}
+                class:list={[
+                  'group flex items-center gap-4 border-b border-border py-5 no-underline transition-colors duration-(--duration-fast) ease-standard sm:gap-8',
+                  item.highlight ? 'text-accent-light' : 'hover:text-accent-light',
+                ]}
+              >
+                <span class="w-6 shrink-0 text-small text-muted tabular-nums" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span class="min-w-0 flex-1 font-display text-[clamp(2rem,1.5rem+2vw,3.25rem)] leading-[1.1] italic">
+                  {item.label}
+                </span>
+                <span
+                  class="shrink-0 text-h3 text-accent transition-transform duration-(--duration-fast) ease-standard group-hover:translate-x-1"
+                  aria-hidden="true"
+                >
+                  →
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </Container>
+
+    <Container class="py-8 text-center">
+      <p class="text-small text-muted">{siteConfig.contactEmail}</p>
+    </Container>
+  </div>
+</dialog>
+
+<script>
+  const overlays = () => document.querySelectorAll<HTMLDialogElement>('dialog[data-menu-overlay]');
+  const getOverlay = (id?: string | null) =>
+    (id ? document.getElementById(id) : overlays()[0]) as HTMLDialogElement | null;
+
+  let opener: HTMLElement | null = null;
+
+  function open(id?: string | null) {
+    const dialog = getOverlay(id);
+    if (!dialog || dialog.open) return;
+    opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    document.documentElement.style.overflow = 'hidden';
+    dialog.showModal();
+  }
+
+  function close() {
+    overlays().forEach((dialog) => dialog.open && dialog.close());
+  }
+
+  overlays().forEach((dialog) => {
+    dialog.addEventListener('close', () => {
+      document.documentElement.style.overflow = '';
+      opener?.focus();
+      opener = null;
+    });
+    // Click directo sobre el <dialog> (fuera del contenido) = backdrop.
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    const target = event.target as Element | null;
+    const openBtn = target?.closest<HTMLElement>('[data-menu-open]');
+    if (openBtn) return open(openBtn.getAttribute('aria-controls'));
+    if (target?.closest('[data-menu-close]')) close();
+  });
+
+  window.addEventListener('mallku:menu-open', (event) => open((event as CustomEvent<{ id?: string }>).detail?.id));
+  window.addEventListener('mallku:menu-close', close);
+</script>
