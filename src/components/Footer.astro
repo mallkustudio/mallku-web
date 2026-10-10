@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Logo from './Logo.astro';
+import Container from './ui/Container.astro';
+import Eyebrow from './ui/Eyebrow.astro';
+import { siteConfig } from '../config/site';
+
+const servicios = (await getCollection('servicios')).sort((a, b) => a.data.order - b.data.order);
+const year = new Date().getFullYear();
+
+const linkClass = 'no-underline transition-colors duration-(--duration-fast) ease-standard hover:text-accent-light';
+---
+
+<footer class="mt-section-md border-t border-border">
+  <Container class="grid gap-12 py-section-sm sm:grid-cols-2 lg:grid-cols-4">
+    <div class="lg:col-span-2">
+      <Logo />
+    </div>
+    <nav aria-label="Servicios">
+      <Eyebrow class="mb-4">Servicios</Eyebrow>
+      <ul class="space-y-2 text-small">
+        {
+          servicios.map((s) => (
+            <li>
+              <a href={`/servicios/${s.data.slug}`} class={linkClass}>
+                {s.data.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <nav aria-label="Estudio">
+      <Eyebrow class="mb-4">Estudio</Eyebrow>
+      <ul class="space-y-2 text-small">
+        <li><a href="/nosotros" class={linkClass}>Nosotros</a></li>
+        <li><a href="/contacto" class={linkClass}>Contacto</a></li>
+        <li>
+          <a href={`mailto:${siteConfig.contactEmail}`} class={linkClass}>{siteConfig.contactEmail}</a>
+        </li>
+      </ul>
+    </nav>
+  </Container>
+  <Container class="border-t border-border py-6">
+    <p class="text-small text-muted">© {year} {siteConfig.name}</p>
+  </Container>
+</footer>
